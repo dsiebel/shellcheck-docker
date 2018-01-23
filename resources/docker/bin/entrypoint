@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+[[ -v VERBOSE ]] && set -x
+set -eu
+
+excludes=()
+exclude_file=
+includes=()
+include_file=
+
+while (( $# > 0 )); do
+    case "$1" in
+        --include)
+            includes+=("$2")
+            shift 2
+            ;;
+        --exclude)
+            excludes+=("$2")
+            shift 2
+            ;;
+        --include-file)
+            include_file="$2";
+            shift 2
+
+            if [[ -f "${include_file}" ]]; then
+                while read -r incl_line; do
+                    includes+=("${incl_line}")
+                done < "${include_file}"
+            else
+                echo "File ${include_file} not found!"
+                exit 2
+            fi
+            ;;
+        --exclude-file)
+            exclude_file="$2"
+            shift 2
+
+            if [[ -f "${exclude_file}" ]]; then
+                while read -r excl_line; do
+                    excludes+=("${excl_line}")
+                done < "${exclude_file}"
+            else
+                echo "File ${exclude_file} not found!"
+                exit 2
+            fi
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+
+print_join() { local IFS="$1"; shift; echo "$*"; }
+
+shopt -s globstar
+GLOBIGNORE="$(print_join ":" "${excludes[@]}")"
+export GLOBIGNORE
+
+#shellcheck disable=SC2068
+if shellcheck -e SC1117 -e SC1091 --format gcc ${includes[@]}; then
+    echo "No issues found!"
+fi
