@@ -58,4 +58,6 @@ export GLOBIGNORE
 #shellcheck disable=SC2068
 if shellcheck -e SC1117 -e SC1091 --format gcc ${includes[@]}; then
     echo "No issues found!"
+else
+    exit 1
 fi
