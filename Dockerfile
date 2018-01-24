@@ -30,6 +30,4 @@ COPY resources/docker/bin/shellcheckw /usr/local/bin/shellcheckw
 RUN apk add --no-cache bash \
  && ldconfig /usr/local/lib
 
-VOLUME ["/code"]
-WORKDIR /code
 ENTRYPOINT ["shellcheckw"]
