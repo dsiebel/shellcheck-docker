@@ -25,11 +25,11 @@ FROM ${SHELLCHECK_BASE_IMAGE} AS shellcheck
 
 COPY --from=shellcheck-build /package/bin/ /usr/local/bin/
 COPY --from=shellcheck-build /package/lib/ /usr/local/lib/
-COPY resources/docker/bin/entrypoint /usr/local/bin/entrypoint
+COPY resources/docker/bin/shellcheckw /usr/local/bin/shellcheckw
 
 RUN apk add --no-cache bash \
  && ldconfig /usr/local/lib
 
 VOLUME ["/code"]
 WORKDIR /code
-ENTRYPOINT ["/usr/local/bin/entrypoint"]
+ENTRYPOINT ["shellcheckw"]
