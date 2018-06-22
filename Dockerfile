@@ -1,12 +1,13 @@
 # ------------------------------------------------------------- shellcheck-build
 
-ARG SHELLCHECK_BUILDER_BASE_IMAGE="alpine:latest"
-ARG SHELLCHECK_BASE_IMAGE="alpine:latest"
-ARG SHELLCHECK_VERSION_REF="master"
+ARG SHELLCHECK_BUILDER_BASE_IMAGE="fleshgrinder/debian:stretch-build"
+ARG SHELLCHECK_BASE_IMAGE="fleshgrinder/debian:stretch"
 
 FROM ${SHELLCHECK_BUILDER_BASE_IMAGE} AS shellcheck-build
 
-RUN apk add --no-cache git build-base ghc cabal \
+ARG SHELLCHECK_VERSION_REF="master"
+
+RUN apt-install git ghc cabal-install \
  && mkdir -p /usr/src/shellcheck \
  && cd /usr/src/shellcheck \
  && git clone https://github.com/koalaman/shellcheck.git . \
@@ -27,7 +28,7 @@ COPY --from=shellcheck-build /package/bin/ /usr/local/bin/
 COPY --from=shellcheck-build /package/lib/ /usr/local/lib/
 COPY resources/docker/bin/shellcheckw /usr/local/bin/shellcheckw
 
-RUN apk add --no-cache bash \
+RUN apt-install bash file \
  && ldconfig /usr/local/lib
 
 ENTRYPOINT ["shellcheckw"]
