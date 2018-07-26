@@ -1,7 +1,5 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/shellcheck-docker:latest', '.']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/shellcheck-docker']
-  timeout: 300s
+  images: ['gcr.io/$PROJECT_ID/shellcheck-docker:latest']
 tags: ['shellcheck', 'docker']
