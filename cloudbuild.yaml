@@ -1,5 +1,13 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/shellcheck-docker:latest', '.']
-  images: ['gcr.io/$PROJECT_ID/shellcheck-docker:latest']
-tags: ['shellcheck', 'docker']
+- id: 'build-shellcheck-docker'
+  name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build'
+    , '-t', 'gcr.io/$PROJECT_ID/shellcheck-docker:latest'
+    , '--cache-from', 'gcr.io/$PROJECT_ID/shellcheck-docker:latest'
+    , '.'
+  ]
+images: ['gcr.io/$PROJECT_ID/shellcheck-docker:latest']
+options:
+  machineType: 'N1_HIGHCPU_8'
+tags: ['shellcheck', 'docker', 'dsiebel']
