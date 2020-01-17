@@ -8,9 +8,9 @@ FROM ${SHELLCHECK_BUILDER_BASE_IMAGE} AS shellcheck-build
 
 ARG SHELLCHECK_VERSION_REF="master"
 
+WORKDIR /usr/src/shellcheck
+
 RUN apt-install git ghc cabal-install \
- && mkdir -p /usr/src/shellcheck \
- && cd /usr/src/shellcheck \
  && git clone https://github.com/koalaman/shellcheck.git . \
  && git checkout ${SHELLCHECK_VERSION_REF} \
  && cabal update && cabal install
