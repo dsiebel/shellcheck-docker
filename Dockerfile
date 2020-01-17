@@ -18,8 +18,8 @@ RUN apt-install git ghc cabal-install \
 ENV PATH="$PATH:/root/.cabal/bin"
 
 RUN mkdir -p  /package/bin /package/lib \
- && cp $(which shellcheck) /package/bin/ \
- && ldd $(which shellcheck) | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' /package/lib/
+ && cp "$(command -v shellcheck)" /package/bin/ \
+ && ldd "$(which command -v)" | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' /package/lib/
 
 # ------------------------------------------------------------------- shellcheck
 
