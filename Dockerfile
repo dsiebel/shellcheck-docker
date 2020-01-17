@@ -19,7 +19,7 @@ ENV PATH="$PATH:/root/.cabal/bin"
 
 RUN mkdir -p  /package/bin /package/lib \
  && cp "$(command -v shellcheck)" /package/bin/ \
- && ldd "$(which command -v)" | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' /package/lib/
+ && ldd "$(command -v shellcheck)" | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' /package/lib/
 
 # ------------------------------------------------------------------- shellcheck
 
