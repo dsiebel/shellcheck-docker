@@ -3,7 +3,7 @@
 ARG SHELLCHECK_BUILDER_BASE_IMAGE="fleshgrinder/debian:stretch-build"
 ARG SHELLCHECK_BASE_IMAGE="fleshgrinder/debian:stretch"
 
-# hadolint ignore=DL3007
+# hadolint ignore=DL3006
 FROM ${SHELLCHECK_BUILDER_BASE_IMAGE} AS shellcheck-build
 
 ARG SHELLCHECK_VERSION_REF="master"
@@ -23,7 +23,7 @@ RUN mkdir -p  /package/bin /package/lib \
 
 # ------------------------------------------------------------------- shellcheck
 
-# hadolint ignore=DL3007
+# hadolint ignore=DL3006
 FROM ${SHELLCHECK_BASE_IMAGE} AS shellcheck
 
 COPY --from=shellcheck-build /package/bin/ /usr/local/bin/
