@@ -25,11 +25,16 @@ jobs:
       - name: 'Build'
         uses: 'docker/build-push-action@v6'
         with:
-          push: ${{ github.event_name != 'pull_request' }}
-          load: ${{ github.event_name == 'pull_request' }}
-          tags: ${{ env.IMAGE_NAME}}
+          push: "${{ github.event_name != 'pull_request' }}"
+          load: "${{ github.event_name == 'pull_request' }}"
+          tags: "${{ env.IMAGE_NAME}}"
 
       - name: 'Test'
         run: |
-          docker run --rm ${{ env.IMAGE_NAME}} --help
-          docker run --rm --entrypoint shellcheck ${{ env.IMAGE_NAME}} --version
+          docker run --rm --entrypoint shellcheck "${{ env.IMAGE_NAME}}" --version
+
+          docker run --rm \
+            --workdir /usr/local/bin \
+            --env VERBOSE=1 \
+            "${{ env.IMAGE_NAME}}" \
+            --include shellcheckw
