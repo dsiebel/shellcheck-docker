@@ -26,4 +26,12 @@ jobs:
         uses: 'docker/build-push-action@v6'
         with:
           push: ${{ github.event_name != 'pull_request' }}
+          load: ${{ github.event_name == 'pull_request' }}
           tags: ${{ env.IMAGE_NAME}}
+
+      - name: 'Test'
+        run: |
+          docker run --rm ${{ env.IMAGE_NAME}} --version
+          docker run --rm ${{ env.IMAGE_NAME}} --help
+          docker run --rm ${{ env.IMAGE_NAME}} shellcheck --version
+          docker run --rm ${{ env.IMAGE_NAME}} shellcheck --help
