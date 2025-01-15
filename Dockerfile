@@ -3,6 +3,7 @@ FROM debian:bookworm-slim
 WORKDIR /usr/src/shellcheck
 
 RUN apt-get update \
+	&& apt-get upgrade --yes \
 	&& apt-get install --yes --no-install-recommends \
 		shellcheck \
 		file
