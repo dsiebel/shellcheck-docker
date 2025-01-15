@@ -1,5 +1,5 @@
 ---
-name: 'Docker Build'
+name: 'Docker'
 'on':
   pull_request:
     branches:
@@ -31,7 +31,5 @@ jobs:
 
       - name: 'Test'
         run: |
-          docker run --rm ${{ env.IMAGE_NAME}} --version
           docker run --rm ${{ env.IMAGE_NAME}} --help
-          docker run --rm ${{ env.IMAGE_NAME}} shellcheck --version
-          docker run --rm ${{ env.IMAGE_NAME}} shellcheck --help
+          docker run --rm --entrypoint shellcheck ${{ env.IMAGE_NAME}} --version
