@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 [[ -v VERBOSE ]] && set -x
+
+#shellcheck enable=check-set-e-suppressed
 set -eu
+shopt -s inherit_errexit
 
 excludes=()
 includes=()
