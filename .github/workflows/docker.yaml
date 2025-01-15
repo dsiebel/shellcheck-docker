@@ -16,6 +16,9 @@ env:
   IMAGE_NAME: 'ghcr.io/dsiebel/shellcheck-docker:latest'
 jobs:
   build:
+    permissions:
+      contents: 'read'
+      packages: 'write'
     runs-on: 'ubuntu-latest'
     steps:
 
